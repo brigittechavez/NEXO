@@ -42,3 +42,12 @@ __screenshots__/
 # System files
 .DS_Store
 Thumbs.db
+
+# Environment files with real credentials.
+# .env.example is the committed template; never commit a filled-in .env.
+.env
+.env.*
+!.env.example
+
+# Visual references used during design. Not part of the public repository.
+/design-references

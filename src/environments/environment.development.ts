@@ -2,6 +2,11 @@ export const environment = {
   production: false,
   supabase: {
     url: 'YOUR_SUPABASE_URL',
-    anonKey: 'YOUR_SUPABASE_ANON_KEY',
+    /**
+     * Supabase publishable key (`sb_publishable_…`) — the current name for what
+     * used to be the anon key. Safe to ship in the browser: it only grants what
+     * Row Level Security allows. Never put a secret or service-role key here.
+     */
+    publishableKey: 'YOUR_SUPABASE_PUBLISHABLE_KEY',
   },
 };

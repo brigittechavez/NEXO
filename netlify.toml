@@ -1,0 +1,42 @@
+# Netlify detects Angular automatically and, when the build produces a server
+# bundle (`outputMode: "server"`), wires SSR up as an Edge Function on its own —
+# no plugin needs to be declared here and no extra dependency belongs in
+# package.json. The build command and publish directory are stated explicitly so
+# the deploy does not depend on framework detection alone.
+#
+# Rendering strategy lives in src/app/app.routes.server.ts, not here:
+#   · public pages  → prerendered at build time (SSR fallback for unknown params)
+#   · private pages → client-rendered
+#
+# Deliberately NO SPA fallback redirect: SSR pages are served by the Edge
+# Function, which runs *before* redirects are evaluated, so a `/*` rule would
+# never apply to them and would only misrepresent how the site is served.
+
+[build]
+  command = "npm run build"
+  publish = "dist/nexo/browser"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# Angular 22 validates the Host header on server-rendered requests (SSRF
+# protection). If the deployed domain ever answers HTTP 400, set NG_ALLOWED_HOSTS
+# in the Netlify UI to that domain — see .env.example.
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    X-Frame-Options = "SAMEORIGIN"
+
+# Hashed build assets are immutable.
+[[headers]]
+  for = "/*.js"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*.css"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"

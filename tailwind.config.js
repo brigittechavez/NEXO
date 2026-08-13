@@ -23,6 +23,10 @@ module.exports = {
       },
       fontFamily: {
         sans: ['Manrope', 'system-ui', 'sans-serif'],
+        // Headings stay on the primary sans (§57: the serif is reserved for hero
+        // words and editorial moments). `font-heading` is used across the app and
+        // must resolve to a real family rather than silently falling back.
+        heading: ['Manrope', 'system-ui', 'sans-serif'],
         serif: ['Instrument Serif', 'Georgia', 'serif'],
       },
       borderRadius: {

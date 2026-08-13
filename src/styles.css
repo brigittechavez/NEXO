@@ -1,34 +1,15 @@
-@import 'tailwindcss';
-
 @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap');
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Design tokens — colours, type scale, radii, shadows and spacing — live in
+   tailwind.config.js as the single source of truth. They were previously also
+   duplicated here as CSS custom properties that nothing consumed, which meant
+   two definitions of the palette that could silently drift apart. */
+
 @layer base {
-  :root {
-    --nexo-violet: #5B4BFF;
-    --electric-indigo: #4938E8;
-    --soft-lavender: #DCD7FF;
-    --ice-blue: #DDF4FF;
-    --electric-cyan: #63D8FF;
-    --off-white: #F8F8F5;
-    --surface: #F1F1F4;
-    --ink: #121214;
-    --muted-text: #66666D;
-    --acid-lime: #D9FF43;
-  }
-
-  .dark {
-    --nexo-violet: #7B6BFF;
-    --electric-indigo: #6358FF;
-    --soft-lavender: #2A2640;
-    --ice-blue: #1A2030;
-    --electric-cyan: #7AE4FF;
-    --off-white: #0C0B12;
-    --surface: #16141F;
-    --ink: #F7F7F4;
-    --muted-text: #A7A5AF;
-    --acid-lime: #E0FF66;
-  }
-
   html {
     font-family: 'Manrope', system-ui, sans-serif;
     scroll-behavior: smooth;
@@ -61,38 +42,56 @@
     @apply bg-nexo-violet/30 text-dark-text;
   }
 
-  * {
-    @apply border-surface;
-  }
-
-  .dark * {
-    @apply border-dark-surface;
-  }
-
   *:focus-visible {
     @apply outline-2 outline-offset-2 outline-nexo-violet;
   }
 }
 
 @layer components {
+  /* ------------------------------------------------------------------
+     Buttons — one definition, two entry points.
+
+     `nx-button` composes these same classes, so an action button and a link
+     styled as a button are pixel-identical. Use the component for actions
+     (<button>) and the classes directly on <a> for navigation, which must stay
+     an anchor for middle-click, focus order and screen readers.
+     ------------------------------------------------------------------ */
+  .btn-base {
+    @apply inline-flex items-center justify-center gap-2 font-sans font-semibold rounded-pill
+      transition-all duration-200 cursor-pointer select-none
+      focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-nexo-violet
+      focus-visible:ring-offset-2 focus-visible:ring-offset-off-white dark:focus-visible:ring-offset-dark-bg
+      active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none;
+  }
+
   .btn-primary {
-    @apply inline-flex items-center justify-center px-6 py-3 bg-nexo-violet text-white font-semibold rounded-pill transition-all duration-200 hover:bg-electric-indigo hover:shadow-soft-md active:scale-[0.98];
+    @apply btn-base px-6 py-3 bg-nexo-violet text-white shadow-soft-sm hover:bg-electric-indigo hover:shadow-soft-md;
   }
 
   .btn-secondary {
-    @apply inline-flex items-center justify-center px-6 py-3 border-2 border-nexo-violet text-nexo-violet font-semibold rounded-pill transition-all duration-200 hover:bg-nexo-violet hover:text-white active:scale-[0.98];
+    @apply btn-base px-6 py-3 border-2 border-nexo-violet text-nexo-violet hover:bg-nexo-violet/5 active:bg-nexo-violet/10;
   }
 
   .btn-ghost {
-    @apply inline-flex items-center justify-center px-6 py-3 text-nexo-violet font-semibold rounded-pill transition-all duration-200 hover:bg-soft-lavender/30 active:scale-[0.98];
+    @apply btn-base px-6 py-3 text-muted-text dark:text-dark-muted hover:text-ink dark:hover:text-dark-text hover:bg-surface dark:hover:bg-dark-surface-high;
   }
 
   .btn-dark {
-    @apply inline-flex items-center justify-center px-6 py-3 bg-ink text-off-white font-semibold rounded-pill transition-all duration-200 hover:bg-dark-surface-high active:scale-[0.98];
+    @apply btn-base px-6 py-3 bg-ink text-white shadow-soft-sm hover:bg-dark-surface-high
+      dark:bg-dark-text dark:text-dark-bg dark:hover:bg-white;
   }
 
-  .dark .btn-dark {
-    @apply bg-dark-text text-dark-bg hover:bg-dark-surface-high;
+  /* Size modifiers. Declared after the variants so their padding wins. */
+  .btn-sm {
+    @apply px-4 py-2 text-sm gap-1.5;
+  }
+
+  .btn-md {
+    @apply px-6 py-3 text-base gap-2;
+  }
+
+  .btn-lg {
+    @apply px-8 py-4 text-lg gap-2.5;
   }
 
   .card-editorial {
@@ -110,16 +109,22 @@
     transform: translateY(-2px);
   }
 
+  /* Inputs. Single definition used by every form in the app; the `nx-badge`
+     component covers badges, so no parallel `.badge-*` class exists. */
   .input-nexo {
-    @apply w-full px-4 py-3 bg-surface text-ink rounded-input border-0 placeholder-muted-text transition-all duration-200 focus:ring-2 focus:ring-nexo-violet/30 focus:bg-white;
+    @apply w-full px-4 py-3 bg-surface text-ink rounded-input border-0 placeholder-muted-text
+      transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-nexo-violet/30 focus:bg-white
+      disabled:opacity-60 disabled:cursor-not-allowed;
   }
 
   .dark .input-nexo {
     @apply bg-dark-surface-high text-dark-text placeholder-dark-muted focus:bg-dark-surface;
   }
 
-  .badge-nexo {
-    @apply inline-flex items-center px-3 py-1 text-xs font-semibold rounded-pill;
+  /* Invalid field. Colour is never the only signal — pair it with the message
+     rendered next to the input. */
+  .input-error {
+    @apply ring-2 ring-red-500/40 focus:ring-red-500/50;
   }
 
   .section-editorial {
@@ -148,21 +153,28 @@
   .text-balance {
     text-wrap: balance;
   }
-
-  .animate-in {
-    animation: fadeIn 0.6s ease-out forwards;
-  }
-
-  .animate-slide-up {
-    animation: slideUp 0.6s ease-out forwards;
-  }
 }
 
+/* Reduced motion.
+   Decorative movement is removed, but functional feedback is kept: a spinner or
+   a loading skeleton that freezes stops communicating "still working", which is
+   worse than the motion it avoids (§75 — "mantener únicamente feedback
+   funcional"). Those two are re-enabled below, slowed down rather than stopped. */
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+
+  .animate-spin {
+    animation: spin 1.6s linear infinite !important;
+  }
+
+  .animate-pulse {
+    animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite !important;
   }
 }

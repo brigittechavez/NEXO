@@ -1,11 +1,50 @@
 <!doctype html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="utf-8">
-  <title>Nexo</title>
+  <title>NEXO — Mentoring que conecta</title>
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="NEXO conecta profesionales con mentores expertos. Sessions 1:1 personalizadas para impulsar tu carrera.">
+  <meta name="theme-color" content="#5B4BFF">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="NEXO — Mentoring que conecta">
+  <meta property="og:description" content="Conecta con mentores expertos. Sessions 1:1 personalizadas para impulsar tu carrera.">
+  <meta property="og:site_name" content="NEXO">
+  <meta property="og:locale" content="es_ES">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="NEXO — Mentoring que conecta">
+  <meta name="twitter:description" content="Conecta con mentores expertos. Sessions 1:1 personalizadas para impulsar tu carrera.">
+
+  <!-- Preconnect -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- Favicon -->
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+  <!-- Canonical -->
+  <link rel="canonical" href="https://nexo-mentoring.com">
+
+  <!-- Resolve the theme before first paint so dark-mode users never see a light flash. -->
+  <script>
+    (function () {
+      try {
+        var saved = localStorage.getItem('nexo-theme');
+        var theme = saved === 'light' || saved === 'dark'
+          ? saved
+          : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        document.documentElement.classList.add(theme);
+        document.documentElement.style.colorScheme = theme;
+      } catch (e) {
+        document.documentElement.classList.add('light');
+      }
+    })();
+  </script>
 </head>
 <body>
   <app-root></app-root>
