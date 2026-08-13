@@ -1,0 +1,168 @@
+@import 'tailwindcss';
+
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap');
+
+@layer base {
+  :root {
+    --nexo-violet: #5B4BFF;
+    --electric-indigo: #4938E8;
+    --soft-lavender: #DCD7FF;
+    --ice-blue: #DDF4FF;
+    --electric-cyan: #63D8FF;
+    --off-white: #F8F8F5;
+    --surface: #F1F1F4;
+    --ink: #121214;
+    --muted-text: #66666D;
+    --acid-lime: #D9FF43;
+  }
+
+  .dark {
+    --nexo-violet: #7B6BFF;
+    --electric-indigo: #6358FF;
+    --soft-lavender: #2A2640;
+    --ice-blue: #1A2030;
+    --electric-cyan: #7AE4FF;
+    --off-white: #0C0B12;
+    --surface: #16141F;
+    --ink: #F7F7F4;
+    --muted-text: #A7A5AF;
+    --acid-lime: #E0FF66;
+  }
+
+  html {
+    font-family: 'Manrope', system-ui, sans-serif;
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply bg-off-white text-ink;
+    min-height: 100vh;
+  }
+
+  .dark body {
+    @apply bg-dark-bg text-dark-text;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-sans font-bold tracking-tight;
+  }
+
+  .font-display {
+    font-family: 'Instrument Serif', Georgia, serif;
+  }
+
+  ::selection {
+    @apply bg-nexo-violet/20 text-ink;
+  }
+
+  .dark ::selection {
+    @apply bg-nexo-violet/30 text-dark-text;
+  }
+
+  * {
+    @apply border-surface;
+  }
+
+  .dark * {
+    @apply border-dark-surface;
+  }
+
+  *:focus-visible {
+    @apply outline-2 outline-offset-2 outline-nexo-violet;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center px-6 py-3 bg-nexo-violet text-white font-semibold rounded-pill transition-all duration-200 hover:bg-electric-indigo hover:shadow-soft-md active:scale-[0.98];
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center px-6 py-3 border-2 border-nexo-violet text-nexo-violet font-semibold rounded-pill transition-all duration-200 hover:bg-nexo-violet hover:text-white active:scale-[0.98];
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center px-6 py-3 text-nexo-violet font-semibold rounded-pill transition-all duration-200 hover:bg-soft-lavender/30 active:scale-[0.98];
+  }
+
+  .btn-dark {
+    @apply inline-flex items-center justify-center px-6 py-3 bg-ink text-off-white font-semibold rounded-pill transition-all duration-200 hover:bg-dark-surface-high active:scale-[0.98];
+  }
+
+  .dark .btn-dark {
+    @apply bg-dark-text text-dark-bg hover:bg-dark-surface-high;
+  }
+
+  .card-editorial {
+    @apply bg-white rounded-card-lg overflow-hidden transition-all duration-300;
+    box-shadow: 0 2px 8px rgba(91, 75, 255, 0.06);
+  }
+
+  .dark .card-editorial {
+    @apply bg-dark-surface;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  .card-editorial:hover {
+    box-shadow: 0 8px 32px rgba(91, 75, 255, 0.12);
+    transform: translateY(-2px);
+  }
+
+  .input-nexo {
+    @apply w-full px-4 py-3 bg-surface text-ink rounded-input border-0 placeholder-muted-text transition-all duration-200 focus:ring-2 focus:ring-nexo-violet/30 focus:bg-white;
+  }
+
+  .dark .input-nexo {
+    @apply bg-dark-surface-high text-dark-text placeholder-dark-muted focus:bg-dark-surface;
+  }
+
+  .badge-nexo {
+    @apply inline-flex items-center px-3 py-1 text-xs font-semibold rounded-pill;
+  }
+
+  .section-editorial {
+    @apply py-16 md:py-24 lg:py-32;
+  }
+
+  .container-editorial {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-nexo-violet to-electric-cyan;
+  }
+}
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .animate-in {
+    animation: fadeIn 0.6s ease-out forwards;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.6s ease-out forwards;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
