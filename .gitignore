@@ -51,3 +51,7 @@ Thumbs.db
 
 # Visual references used during design. Not part of the public repository.
 /design-references
+
+# Internal working docs. Kept locally, not published.
+NEXO_MASTER_REQUIREMENTS.md
+NEXO_TASKS.md
