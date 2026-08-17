@@ -16,7 +16,7 @@ import { AuthService } from '../../core/services/auth.service';
         <!-- Logo -->
         <div class="text-center mb-8">
           <a routerLink="/" class="inline-flex items-center gap-2">
-            <app-logo [size]="36" />
+            <app-logo variant="mark" [height]="36" alt="" />
             <span class="text-xl font-bold tracking-tight text-ink dark:text-dark-text">NEXO</span>
           </a>
         </div>

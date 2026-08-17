@@ -47,10 +47,14 @@ import { SeoService } from '../../shared/ui/seo.service';
             <!-- Photo -->
             <div class="w-full lg:w-[380px] flex-shrink-0">
               <div class="relative aspect-[3/4] rounded-card-xl overflow-hidden shadow-soft-lg max-w-[340px] mx-auto lg:mx-0">
+                <!-- The LCP element of this page: loaded eagerly and hinted as
+                     high priority. The container fixes the ratio, so no shift. -->
                 <img
                   [src]="mentor()!.photo"
                   [alt]="mentor()!.name"
                   class="w-full h-full object-cover"
+                  fetchpriority="high"
+                  decoding="async"
                 />
                 <div class="absolute inset-0 bg-gradient-to-t from-ink/30 via-transparent to-transparent"></div>
               </div>
@@ -633,11 +637,12 @@ export class ProfileComponent implements OnInit {
       return;
     }
 
+    // No `image`: the portraits are WebP and several social crawlers still fail
+    // to render WebP previews, so this falls back to the PNG social card.
     this.seo.setAll({
       title: `${mentor.name} — ${mentor.title} | NEXO`,
       description: mentor.bio,
       path: `/mentor/${mentor.id}`,
-      image: mentor.photo,
     });
   }
 }

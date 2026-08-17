@@ -14,6 +14,12 @@ export interface SeoData {
 const SITE_NAME = 'NEXO';
 const SITE_URL = 'https://nexo-mentoring.com';
 
+/**
+ * Social sharing image. Kept as PNG on purpose: several crawlers still do not
+ * render WebP previews reliably.
+ */
+const DEFAULT_OG_IMAGE = '/assets/images/social/og-nexo.png';
+
 const DEFAULT_SEO: SeoData = {
   title: 'NEXO — Encuentra a quien ya recorrió tu camino',
   description:
@@ -77,10 +83,13 @@ export class SeoService {
     this.metaService.updateTag({ property: 'og:type', content: 'website' });
     this.setCanonical(url);
 
-    if (config.image) {
-      this.metaService.updateTag({ property: 'og:image', content: config.image });
-      this.metaService.updateTag({ name: 'twitter:image', content: config.image });
-    }
+    // Crawlers need an absolute URL; routes may pass a root-relative path.
+    const image = config.image ?? DEFAULT_OG_IMAGE;
+    const imageUrl = image.startsWith('http') ? image : `${SITE_URL}${image}`;
+
+    this.metaService.updateTag({ property: 'og:image', content: imageUrl });
+    this.metaService.updateTag({ name: 'twitter:image', content: imageUrl });
+    this.metaService.updateTag({ property: 'og:image:alt', content: config.title });
   }
 
   private setCanonical(url: string): void {

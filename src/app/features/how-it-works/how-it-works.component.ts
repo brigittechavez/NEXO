@@ -32,19 +32,25 @@ import { ScrollRevealDirective } from '../../shared/motion/scroll-reveal.directi
       <div class="container-editorial">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center">
           <div class="lg:col-span-5 order-2 lg:order-1">
-            <div class="relative rounded-card-xl bg-gradient-to-br from-nexo-violet to-electric-indigo p-10 md:p-14 flex items-center justify-center min-h-[360px]">
-              <div class="absolute inset-8 rounded-card-lg border-2 border-white/20"></div>
-              <div class="relative z-10 text-center">
-                <span class="font-serif text-[5rem] md:text-[7rem] text-white/10 absolute -top-6 -left-2">01</span>
-                <div class="space-y-4 mt-8">
-                  <div class="mx-auto w-20 h-20 rounded-card-sm bg-white/20 backdrop-blur-sm flex items-center justify-center">
-                    <svg class="text-white" xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                      <circle cx="11" cy="11" r="8"/>
-                      <line x1="21" y1="21" x2="16.65" y2="16.65"/>
-                    </svg>
-                  </div>
-                  <p class="text-white/80 text-sm font-medium">Búsqueda inteligente</p>
+            <!-- The step number and the icon used to sit on top of each other,
+                 the numeral absolutely positioned over the centred icon. Now the
+                 numeral reads as a label at the top, an oversized ghost copy acts
+                 as texture in the corner, and the icon anchors the bottom. -->
+            <div class="step-visual relative flex min-h-[360px] flex-col justify-between overflow-hidden rounded-card-xl bg-gradient-to-br from-nexo-violet to-electric-indigo p-8 md:p-10">
+              <span
+                class="pointer-events-none absolute -bottom-10 -right-3 font-serif text-[12rem] leading-none text-white/[0.08] select-none"
+                aria-hidden="true"
+                >01</span
+              >
+              <span class="relative z-10 font-serif text-4xl leading-none text-white/70">01</span>
+              <div class="relative z-10 flex items-center gap-4">
+                <div class="step-visual__icon flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-card-sm bg-white/20 backdrop-blur-sm">
+                  <svg class="text-white" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"/>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                  </svg>
                 </div>
+                <p class="text-base font-semibold text-white">Búsqueda inteligente</p>
               </div>
             </div>
           </div>
@@ -52,7 +58,7 @@ import { ScrollRevealDirective } from '../../shared/motion/scroll-reveal.directi
           <div class="lg:col-span-7 order-1 lg:order-2 space-y-6">
             <div class="flex items-center gap-3">
               <span class="w-10 h-10 rounded-full bg-nexo-violet/10 flex items-center justify-center font-serif text-lg text-nexo-violet font-bold">1</span>
-              <h2 class="font-heading-lg font-bold text-ink dark:text-dark-text">Descubre tu camino</h2>
+              <h2 class="text-heading-lg font-bold text-ink dark:text-dark-text">Descubre tu camino</h2>
             </div>
             <p class="text-muted-text dark:text-dark-muted text-lg leading-relaxed max-w-lg">
               Explora mentores por categoría, trayectoria o especialidad. NEXO analiza tu objetivo y te muestra a los mentores que mejor se alinean con lo que necesitas.
@@ -95,7 +101,7 @@ import { ScrollRevealDirective } from '../../shared/motion/scroll-reveal.directi
           <div class="lg:col-span-7 space-y-6">
             <div class="flex items-center gap-3">
               <span class="w-10 h-10 rounded-full bg-electric-cyan/10 flex items-center justify-center font-serif text-lg text-electric-cyan font-bold">2</span>
-              <h2 class="font-heading-lg font-bold text-ink dark:text-dark-text">Conecta directamente</h2>
+              <h2 class="text-heading-lg font-bold text-ink dark:text-dark-text">Conecta directamente</h2>
             </div>
             <p class="text-muted-text dark:text-dark-muted text-lg leading-relaxed max-w-lg">
               Agenda una sesión con el mentor que elijas. Sin intermediarios, sin burocracia. Una conversación real con alguien que vivió lo que tú estás viviendo ahora.
@@ -129,21 +135,23 @@ import { ScrollRevealDirective } from '../../shared/motion/scroll-reveal.directi
           </div>
 
           <div class="lg:col-span-5">
-            <div class="relative rounded-card-xl bg-gradient-to-br from-electric-cyan/20 to-ice-blue/30 dark:from-dark-surface dark:to-dark-surface-high p-10 md:p-14 flex items-center justify-center min-h-[360px]">
-              <div class="absolute inset-8 rounded-card-lg border-2 border-electric-cyan/20"></div>
-              <div class="relative z-10 text-center">
-                <span class="font-serif text-[5rem] md:text-[7rem] text-electric-cyan/10 absolute -top-6 -left-2">02</span>
-                <div class="space-y-4 mt-8">
-                  <div class="mx-auto w-20 h-20 rounded-card-sm bg-electric-cyan/10 flex items-center justify-center">
-                    <svg class="text-electric-cyan" xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                      <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
-                      <line x1="16" y1="2" x2="16" y2="6"/>
-                      <line x1="8" y1="2" x2="8" y2="6"/>
-                      <line x1="3" y1="10" x2="21" y2="10"/>
-                    </svg>
-                  </div>
-                  <p class="text-electric-cyan/80 text-sm font-medium">Agenda directa</p>
+            <div class="step-visual relative flex min-h-[360px] flex-col justify-between overflow-hidden rounded-card-xl border border-electric-cyan/20 bg-gradient-to-br from-electric-cyan/20 to-ice-blue/30 p-8 dark:border-dark-surface-high dark:from-dark-surface dark:to-dark-surface-high md:p-10">
+              <span
+                class="pointer-events-none absolute -bottom-10 -right-3 font-serif text-[12rem] leading-none text-electric-indigo/[0.07] select-none dark:text-electric-cyan/[0.07]"
+                aria-hidden="true"
+                >02</span
+              >
+              <span class="relative z-10 font-serif text-4xl leading-none text-electric-indigo/60 dark:text-electric-cyan/70">02</span>
+              <div class="relative z-10 flex items-center gap-4">
+                <div class="step-visual__icon flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-card-sm bg-white/70 dark:bg-electric-cyan/10">
+                  <svg class="text-electric-indigo dark:text-electric-cyan" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                    <line x1="16" y1="2" x2="16" y2="6"/>
+                    <line x1="8" y1="2" x2="8" y2="6"/>
+                    <line x1="3" y1="10" x2="21" y2="10"/>
+                  </svg>
                 </div>
+                <p class="text-base font-semibold text-ink dark:text-dark-text">Agenda directa</p>
               </div>
             </div>
           </div>
@@ -156,20 +164,22 @@ import { ScrollRevealDirective } from '../../shared/motion/scroll-reveal.directi
       <div class="container-editorial">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center">
           <div class="lg:col-span-5 order-2 lg:order-1">
-            <div class="relative rounded-card-xl bg-gradient-to-br from-ink to-dark-surface dark:from-dark-bg dark:to-dark-surface p-10 md:p-14 flex items-center justify-center min-h-[360px]">
-              <div class="absolute inset-8 rounded-card-lg border-2 border-white/10"></div>
-              <div class="relative z-10 text-center">
-                <span class="font-serif text-[5rem] md:text-[7rem] text-white/10 absolute -top-6 -left-2">03</span>
-                <div class="space-y-4 mt-8">
-                  <div class="mx-auto w-20 h-20 rounded-card-sm bg-acid-lime/10 flex items-center justify-center">
-                    <svg class="text-acid-lime" xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                      <path d="M12 20V10"/>
-                      <path d="M18 20V4"/>
-                      <path d="M6 20v-4"/>
-                    </svg>
-                  </div>
-                  <p class="text-white/80 text-sm font-medium">Progreso continuo</p>
+            <div class="step-visual relative flex min-h-[360px] flex-col justify-between overflow-hidden rounded-card-xl bg-gradient-to-br from-ink to-dark-surface p-8 dark:from-dark-bg dark:to-dark-surface md:p-10">
+              <span
+                class="pointer-events-none absolute -bottom-10 -right-3 font-serif text-[12rem] leading-none text-acid-lime/[0.09] select-none"
+                aria-hidden="true"
+                >03</span
+              >
+              <span class="relative z-10 font-serif text-4xl leading-none text-white/60">03</span>
+              <div class="relative z-10 flex items-center gap-4">
+                <div class="step-visual__icon flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-card-sm bg-acid-lime/15">
+                  <svg class="text-acid-lime" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 20V10"/>
+                    <path d="M18 20V4"/>
+                    <path d="M6 20v-4"/>
+                  </svg>
                 </div>
+                <p class="text-base font-semibold text-white">Progreso continuo</p>
               </div>
             </div>
           </div>
@@ -177,7 +187,7 @@ import { ScrollRevealDirective } from '../../shared/motion/scroll-reveal.directi
           <div class="lg:col-span-7 order-1 lg:order-2 space-y-6">
             <div class="flex items-center gap-3">
               <span class="w-10 h-10 rounded-full bg-acid-lime/15 flex items-center justify-center font-serif text-lg text-ink dark:text-dark-text font-bold">3</span>
-              <h2 class="font-heading-lg font-bold text-ink dark:text-dark-text">Avanza con rumbo</h2>
+              <h2 class="text-heading-lg font-bold text-ink dark:text-dark-text">Avanza con rumbo</h2>
             </div>
             <p class="text-muted-text dark:text-dark-muted text-lg leading-relaxed max-w-lg">
               Después de cada sesión, registra tu progreso. NEXO no termina cuando acaba la mentoría. Sigue con sesiones de seguimiento y vuelve a conectarte con tu mentor cuando lo necesites.
@@ -235,5 +245,27 @@ import { ScrollRevealDirective } from '../../shared/motion/scroll-reveal.directi
       </div>
     </section>
   `,
+  styles: [
+    `
+      /* The visual panel reacts as a whole: its icon lifts slightly when the
+         panel is hovered, which keeps the step feeling alive without animating
+         the illustration itself. */
+      .step-visual__icon {
+        transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+
+      .step-visual:hover .step-visual__icon {
+        transform: translateY(-4px) scale(1.05);
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .step-visual__icon,
+        .step-visual:hover .step-visual__icon {
+          transition: none;
+          transform: none;
+        }
+      }
+    `,
+  ],
 })
 export class HowItWorksComponent {}

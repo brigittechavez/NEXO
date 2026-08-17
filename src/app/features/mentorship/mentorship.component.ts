@@ -170,7 +170,7 @@ export class MentorshipComponent {
   protected readonly activeFilter = signal<'all' | 'upcoming' | 'completed'>('all');
 
   protected readonly mentorName = 'Carlos Mendoza';
-  protected readonly mentorPhoto = 'https://api.dicebear.com/7.x/avataaars/svg?seed=Carlos';
+  protected readonly mentorPhoto = '/assets/images/mentors/mentor-m1-carlos-mendoza.webp';
 
   protected readonly completedSessions = computed(
     () => this.sessions().filter(s => s.status === 'completed').length

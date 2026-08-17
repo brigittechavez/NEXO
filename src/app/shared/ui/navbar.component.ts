@@ -16,7 +16,7 @@ import { ThemeSwitcherComponent } from './theme-switcher.component';
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between h-16 md:h-18">
           <a routerLink="/" class="flex items-center gap-2 group" (click)="closeMobileMenu()">
-            <app-logo [size]="28" />
+            <app-logo variant="mark" [height]="28" alt="" [priority]="true" />
             <span class="font-serif text-xl font-bold text-ink dark:text-dark-text">NEXO</span>
           </a>
 

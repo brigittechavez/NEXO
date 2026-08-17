@@ -17,7 +17,7 @@ import { ProgressStepsComponent } from '../../shared/ui/progress-steps.component
       <header class="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-dark-bg/80 backdrop-blur-md border-b border-surface dark:border-dark-surface-high">
         <div class="max-w-5xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
           <a routerLink="/" class="inline-flex items-center gap-2">
-            <app-logo [size]="28" />
+            <app-logo variant="mark" [height]="28" alt="" />
             <span class="text-lg font-bold tracking-tight text-ink dark:text-dark-text">NEXO</span>
           </a>
           @if (currentStep() > 0) {

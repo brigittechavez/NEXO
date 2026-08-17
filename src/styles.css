@@ -17,6 +17,15 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
+  /* Safety net, not the fix: the real causes of sideways scroll are corrected
+     at their source (see the scroll-reveal directive). `clip` rather than
+     `hidden` so it never creates a scroll container and `position: sticky`
+     keeps working inside. */
+  html,
+  body {
+    overflow-x: clip;
+  }
+
   body {
     @apply bg-off-white text-ink;
     min-height: 100vh;
@@ -26,12 +35,30 @@
     @apply bg-dark-bg text-dark-text;
   }
 
+  /* Manrope is the default for every heading: card titles, dashboard headings
+     and anything functional. Display headings opt into the serif explicitly. */
   h1, h2, h3, h4, h5, h6 {
     @apply font-sans font-bold tracking-tight;
   }
 
+  /* Instrument Serif ships a single weight plus its italic, so a bold heading
+     would be faux-bolded by the browser — heavy, uneven, and exactly what made
+     the display type look unrefined. Whenever the serif is applied to a heading
+     we drop back to its real weight and tighten the setting instead. */
+  h1.font-serif,
+  h2.font-serif,
+  h3.font-serif,
+  h4.font-serif,
+  .font-serif > h1,
+  .font-serif > h2 {
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+  }
+
   .font-display {
     font-family: 'Instrument Serif', Georgia, serif;
+    font-weight: 400;
   }
 
   ::selection {
@@ -152,6 +179,564 @@
 
   .text-balance {
     text-wrap: balance;
+  }
+}
+
+/* ================= HERO ECOSYSTEM =================
+   Structure borrowed from ref-02: a nucleus, concentric tracks that echo
+   its silhouette, and portraits distributed across them. Colour, weight
+   and rhythm belong to NEXO. */
+
+/* Atmosphere. Light at the top, violet gathering behind the scene, then
+   easing back out — no black, no neon. */
+.hero__sky {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(110% 62% at 50% 60%, rgba(91, 75, 255, 0.28) 0%, rgba(91, 75, 255, 0.09) 46%, rgba(91, 75, 255, 0) 78%),
+    radial-gradient(80% 50% at 22% 52%, rgba(220, 215, 255, 0.55), rgba(220, 215, 255, 0) 70%),
+    radial-gradient(70% 46% at 82% 50%, rgba(221, 244, 255, 0.5), rgba(221, 244, 255, 0) 72%),
+    linear-gradient(to bottom, #f8f8f5 0%, #f4f2ff 42%, #f8f8f5 88%, #f8f8f5 100%);
+}
+
+.dark .hero__sky {
+  background:
+    radial-gradient(110% 62% at 50% 60%, rgba(91, 75, 255, 0.34) 0%, rgba(91, 75, 255, 0.11) 48%, rgba(91, 75, 255, 0) 80%),
+    radial-gradient(70% 46% at 82% 50%, rgba(99, 216, 255, 0.12), rgba(99, 216, 255, 0) 72%),
+    linear-gradient(to bottom, #0c0b12 0%, #14121f 44%, #0c0b12 88%, #0c0b12 100%);
+}
+
+/* On phones the hero is the whole opening screen: svh (not vh) so the browser
+   chrome collapsing does not leave a strip of the next section peeking in. */
+.hero {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+@media (min-width: 768px) {
+  .hero {
+    min-height: 0;
+    display: block;
+  }
+}
+
+.hero-scene {
+  position: relative;
+  margin: 2.25rem auto 0;
+  width: 100%;
+  max-width: 940px;
+  height: 300px;
+}
+
+@media (min-width: 768px) {
+  .hero-scene {
+    height: 380px;
+    margin-top: 0.75rem;
+  }
+}
+
+/* ---- Concentric tracks ---- */
+.hero-scene__tracks {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+}
+
+.hero-track {
+  position: absolute;
+  border-radius: 999px;
+  border: 1px solid rgba(91, 75, 255, 0.16);
+  transition:
+    border-color 0.6s ease,
+    transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  animation: track-in 1s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.hero-track--1 {
+  width: min(600px, 84%);
+  height: 108px;
+  animation-delay: 0.45s;
+}
+
+.hero-track--2 {
+  width: min(760px, 96%);
+  height: 188px;
+  border-color: rgba(91, 75, 255, 0.12);
+  animation-delay: 0.58s;
+}
+
+/* Capped at 100% so the outer track never reaches past the scene on phones,
+   where 108% would be clipped by the section and read as a cut-off line. */
+.hero-track--3 {
+  width: min(940px, 100%);
+  height: 272px;
+  border-color: rgba(91, 75, 255, 0.09);
+  animation-delay: 0.7s;
+}
+
+.dark .hero-track {
+  border-color: rgba(160, 148, 255, 0.2);
+}
+
+/* The scene answers when the search takes focus. */
+.hero-scene.is-searching .hero-track {
+  border-color: rgba(91, 75, 255, 0.34);
+  transform: scale(1.012);
+}
+
+@keyframes track-in {
+  from {
+    opacity: 0;
+    transform: scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ---- Nucleus: the search ---- */
+.hero-core {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: min(560px, 92%);
+  padding: 0.5rem 0.5rem 0.5rem 1.15rem;
+  border-radius: 999px;
+  background: #ffffff;
+  box-shadow:
+    0 18px 44px -14px rgba(43, 30, 140, 0.4),
+    0 0 0 1px rgba(91, 75, 255, 0.08);
+  transform: translate(-50%, -50%);
+  animation: core-in 0.75s cubic-bezier(0.22, 1, 0.36, 1) both;
+  transition: box-shadow 0.5s ease;
+}
+
+.dark .hero-core {
+  background: #201d2d;
+  box-shadow:
+    0 18px 44px -14px rgba(0, 0, 0, 0.6),
+    0 0 0 1px rgba(160, 148, 255, 0.16);
+}
+
+.hero-scene.is-searching .hero-core {
+  box-shadow:
+    0 22px 54px -14px rgba(43, 30, 140, 0.48),
+    0 0 0 3px rgba(91, 75, 255, 0.22);
+}
+
+@keyframes core-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.93);
+  }
+}
+
+.hero-core__icon {
+  flex-shrink: 0;
+  color: #66666d;
+}
+
+.hero-core__input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  background: transparent;
+  padding: 0.6rem 0;
+  font-size: 0.95rem;
+  color: #121214;
+  outline: none;
+}
+
+.dark .hero-core__input {
+  color: #f7f7f4;
+}
+
+.hero-core__input::placeholder {
+  color: #8d8d97;
+}
+
+.hero-core__go {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 999px;
+  background: #5b4bff;
+  color: #fff;
+  transition:
+    background-color 0.3s ease,
+    transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.hero-core__go:hover {
+  background: #4938e8;
+  transform: scale(1.06);
+}
+
+.hero-core__go:focus-visible {
+  outline: 2px solid #5b4bff;
+  outline-offset: 3px;
+}
+
+/* ---- Orbiting mentors ---- */
+.hero-orb {
+  position: absolute;
+  z-index: 10;
+  display: block;
+  border-radius: 999px;
+  animation: orb-in 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: var(--orb-delay, 0ms);
+  transition:
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.45s ease;
+}
+
+.hero-orb--lg {
+  width: 104px;
+  height: 104px;
+}
+
+.hero-orb--md {
+  width: 88px;
+  height: 88px;
+}
+
+.hero-orb--sm {
+  width: 72px;
+  height: 72px;
+}
+
+@media (max-width: 767px) {
+  .hero-orb--lg {
+    width: 76px;
+    height: 76px;
+  }
+
+  .hero-orb--md {
+    width: 64px;
+    height: 64px;
+  }
+
+  /* Scaled down with the rest so the hierarchy keeps its order — without this
+     the small orbs end up larger than the medium ones on a phone. */
+  .hero-orb--sm {
+    width: 56px;
+    height: 56px;
+  }
+}
+
+.hero-orb__ring {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #f1f1f4;
+  box-shadow:
+    0 14px 30px -10px rgba(43, 30, 140, 0.45),
+    0 0 0 3px rgba(255, 255, 255, 0.75);
+}
+
+.dark .hero-orb__ring {
+  box-shadow:
+    0 14px 30px -10px rgba(0, 0, 0, 0.6),
+    0 0 0 3px rgba(32, 29, 45, 0.9);
+}
+
+.hero-orb__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+}
+
+.hero-orb:hover,
+.hero-orb:focus-visible {
+  transform: scale(1.06);
+  z-index: 30;
+}
+
+.hero-orb:focus-visible {
+  outline: 2px solid #5b4bff;
+  outline-offset: 4px;
+}
+
+/* Everyone else steps back a little while one mentor is examined. */
+.hero-scene:has(.hero-orb:hover) .hero-orb:not(:hover) {
+  opacity: 0.62;
+}
+
+/* Identity on demand */
+.hero-orb__tag {
+  position: absolute;
+  left: 50%;
+  top: calc(100% + 0.5rem);
+  white-space: nowrap;
+  border-radius: 12px;
+  background: #121214;
+  padding: 0.35rem 0.6rem;
+  font-size: 12px;
+  line-height: 1.25;
+  color: #fff;
+  opacity: 0;
+  transform: translate(-50%, 4px);
+  pointer-events: none;
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.hero-orb:hover .hero-orb__tag,
+.hero-orb:focus-visible .hero-orb__tag {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+@keyframes orb-in {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+}
+
+/* Ambient drift: three periods so nobody floats in step. */
+.hero-orb--driftA {
+  animation:
+    orb-in 0.8s cubic-bezier(0.22, 1, 0.36, 1) both,
+    drift-a 7s ease-in-out 1.4s infinite;
+}
+
+.hero-orb--driftB {
+  animation:
+    orb-in 0.8s cubic-bezier(0.22, 1, 0.36, 1) both,
+    drift-b 9s ease-in-out 1.8s infinite;
+}
+
+.hero-orb--driftC {
+  animation:
+    orb-in 0.8s cubic-bezier(0.22, 1, 0.36, 1) both,
+    drift-c 8s ease-in-out 2.1s infinite;
+}
+
+@keyframes drift-a {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 0 -7px;
+  }
+}
+
+@keyframes drift-b {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 3px 6px;
+  }
+}
+
+@keyframes drift-c {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: -4px -5px;
+  }
+}
+
+/* ---- Discipline chips ---- */
+.hero-chip {
+  position: absolute;
+  top: 50%;
+  z-index: 15;
+  transform: translateY(-50%);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.92);
+  padding: 0.4rem 0.85rem;
+  font-size: 12px;
+  font-weight: 600;
+  color: #4938e8;
+  box-shadow: 0 10px 24px -10px rgba(43, 30, 140, 0.4);
+  animation: orb-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.5s both;
+  transition:
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 0.35s ease;
+}
+
+.dark .hero-chip {
+  background: rgba(32, 29, 45, 0.92);
+  color: #a094ff;
+}
+
+.hero-chip--left {
+  left: 0;
+}
+
+.hero-chip--right {
+  right: 0;
+}
+
+.hero-chip:hover {
+  transform: translateY(-50%) scale(1.05);
+}
+
+.hero-chip:focus-visible {
+  outline: 2px solid #5b4bff;
+  outline-offset: 3px;
+}
+
+@media (max-width: 767px) {
+  .hero-chip {
+    display: none;
+  }
+
+  /* On a narrow screen the widest tags reach past the viewport edge. Wrap them
+     instead of letting the section clip a name in half. */
+  .hero-orb__tag {
+    max-width: 8.5rem;
+    white-space: normal;
+    text-align: center;
+  }
+}
+
+
+/* One reduced-motion contract for the whole page: decorative movement is
+   removed, hover feedback stays as a colour/shadow change only. The hero
+   scene keeps its composition and the search keeps working — only the
+   drift, the entrances and the scale changes go away. */
+@media (prefers-reduced-motion: reduce) {
+  /* Hero ecosystem: the composition stays, the movement goes. The search and
+     every mentor link keep working exactly the same. */
+  .hero-orb,
+  .hero-chip,
+  .hero-track,
+  .hero-core,
+  .hero-orb--driftA,
+  .hero-orb--driftB,
+  .hero-orb--driftC {
+    animation: none !important;
+  }
+
+  .hero-orb,
+  .hero-chip,
+  .hero-track,
+  .hero-core,
+  .hero-core__go,
+  .hero-orb__tag {
+    transition: none !important;
+  }
+
+  .hero-orb:hover,
+  .hero-orb:focus-visible,
+  .hero-core__go:hover {
+    transform: none !important;
+  }
+
+  .hero-chip:hover {
+    transform: translateY(-50%) !important;
+  }
+
+  .step-card,
+  .step-card__badge,
+  .mentor-tile,
+  .cat-face,
+  .cat-face__img,
+  .cat-panel__cta,
+  .cat-tab::after,
+  .hero-orb,
+  .hero-chip,
+  .hero-track,
+  .hero-core,
+  .hero-core__go,
+  .hero-orb__tag {
+    transition: none;
+  }
+
+  .cat-panel__wash,
+  .cat-panel__title,
+  .cat-panel__lede,
+  .cat-panel__specs,
+  .cat-panel__count,
+  .cat-face,
+  .hero-orb,
+  .hero-orb--driftA,
+  .hero-orb--driftB,
+  .hero-orb--driftC,
+  .hero-chip,
+  .hero-track,
+  .hero-core {
+    animation: none;
+  }
+
+  .step-card:hover,
+  .step-card:focus-within,
+  .step-card:hover .step-card__badge,
+  .mentor-tile:hover,
+  .mentor-tile:focus-visible,
+  .cat-face:hover,
+  .cat-face:focus-visible,
+  .cat-panel__cta:hover,
+  .hero-orb:hover,
+  .hero-orb:focus-visible,
+  .hero-core__go:hover {
+    transform: none;
+  }
+
+  .hero-chip:hover {
+    transform: translateY(-50%);
+  }
+
+  /* The identity tag still appears — it is information, not decoration. */
+  .hero-orb:hover .hero-orb__tag,
+  .hero-orb:focus-visible .hero-orb__tag {
+    transform: translate(-50%, 0);
+  }
+}
+
+/* Motion primitives shared by the home compositions. Global because component
+   styles scope keyframe names, and these are reused across several sections. */
+@keyframes wash-in {
+  from {
+    opacity: 0;
+    transform: translate(24px, -18px) scale(0.9);
+  }
+  to {
+    opacity: 0.9;
+    transform: translate(0, 0) scale(1);
+  }
+}
+
+@keyframes panel-rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes face-in {
+  from {
+    opacity: 0;
+    transform: translateY(22px) scale(0.94);
   }
 }
 

@@ -12,7 +12,7 @@ import { LogoComponent } from './logo.component';
         <div class="grid grid-cols-1 md:grid-cols-4 gap-10">
           <div class="md:col-span-2">
             <a routerLink="/" class="flex items-center gap-2 mb-4">
-              <app-logo [size]="28" />
+              <app-logo variant="mark" [height]="28" alt="" />
               <span class="font-serif text-xl font-bold text-white">NEXO</span>
             </a>
             <p class="text-dark-muted text-sm max-w-sm leading-relaxed">

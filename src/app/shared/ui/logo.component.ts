@@ -1,50 +1,63 @@
-import { Component, Input } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, input, computed } from '@angular/core';
 
+/** Intrinsic pixel sizes of the brand files, used to derive width from height. */
+const RATIO = {
+  full: 2048 / 768, // nexo-logo.png  — symbol + wordmark
+  mark: 1, // nexo-mark-ui.webp — symbol only, square
+} as const;
+
+/**
+ * NEXO brand mark.
+ *
+ * `full`  — symbol + wordmark. Public header, footer, auth and onboarding.
+ * `mark`  — symbol alone, for tight surfaces such as the dashboard sidebar.
+ *
+ * Width is derived from the declared height so the intrinsic ratio is always
+ * preserved and the reserved box never shifts once the file loads.
+ */
 @Component({
   selector: 'app-logo',
   standalone: true,
-  imports: [CommonModule],
   template: `
-    <svg
-      [attr.width]="size"
-      [attr.height]="size"
-      viewBox="0 0 100 100"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      [attr.aria-label]="'NEXO logo'"
-      role="img"
-    >
-      <!-- Outer flowing shape — suggests connection and motion -->
-      <path
-        d="M50 5 C72 5 90 18 95 38 C98 50 95 65 85 78 C75 88 62 95 50 95 C38 95 25 88 15 78 C5 65 2 50 5 38 C10 18 28 5 50 5Z"
-        stroke="currentColor"
-        [attr.stroke-width]="2.5"
-        fill="none"
-      />
-
-      <!-- Inner negative space forming a subtle 'N' -->
-      <path
-        d="M35 30 L35 70 L55 30 L55 70"
-        stroke="currentColor"
-        [attr.stroke-width]="4"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        fill="none"
-        opacity="0.9"
-      />
-
-      <!-- Accent strokes suggesting movement -->
-      <path
-        d="M62 35 Q75 50 62 65"
-        stroke="currentColor"
-        [attr.stroke-width]="2.5"
-        stroke-linecap="round"
-        fill="none"
-      />
-    </svg>
+    <img
+      [src]="src()"
+      [width]="width()"
+      [height]="height()"
+      [alt]="alt()"
+      [attr.aria-hidden]="alt() ? null : 'true'"
+      [attr.fetchpriority]="priority() ? 'high' : null"
+      [attr.loading]="priority() ? null : 'lazy'"
+      [attr.decoding]="priority() ? null : 'async'"
+      class="block h-auto max-w-full select-none"
+      [style.width.px]="width()"
+    />
   `,
 })
 export class LogoComponent {
-  @Input() size: number = 32;
+  variant = input<'full' | 'mark'>('full');
+
+  /** Rendered height in px; width follows the file's own proportion. */
+  height = input<number>(28);
+
+  /**
+   * Accessible name. Leave empty when the logo sits next to visible "NEXO"
+   * text, so screen readers do not announce the brand twice.
+   */
+  alt = input<string>('NEXO');
+
+  /** Set on above-the-fold logos (header) to avoid lazy-loading the LCP area. */
+  priority = input<boolean>(false);
+
+  /**
+   * The mark is served from a UI-sized WebP (256 px, ~11 KB) rather than the
+   * 1254 px master PNG, which is 60x heavier and loads on every page. The master
+   * stays in place as the source for the favicon and app icons.
+   */
+  protected readonly src = computed(() =>
+    this.variant() === 'mark'
+      ? '/assets/images/brand/nexo-mark-ui.webp'
+      : '/assets/images/brand/nexo-logo.png'
+  );
+
+  protected readonly width = computed(() => Math.round(this.height() * RATIO[this.variant()]));
 }

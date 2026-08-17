@@ -21,7 +21,7 @@ import { DemoBannerComponent } from '../../shared/ui/demo-banner.component';
           <!-- Logo -->
           <div class="mb-10">
             <a routerLink="/" class="inline-flex items-center gap-2">
-              <app-logo [size]="36" />
+              <app-logo variant="mark" [height]="36" alt="" />
               <span class="text-xl font-bold tracking-tight text-ink dark:text-dark-text">NEXO</span>
             </a>
           </div>
@@ -361,7 +361,7 @@ import { DemoBannerComponent } from '../../shared/ui/demo-banner.component';
         <!-- Content -->
         <div class="relative z-10 text-center px-12 max-w-lg">
           <div class="w-20 h-20 mx-auto mb-8 bg-white/10 backdrop-blur-sm rounded-card-lg flex items-center justify-center">
-            <app-logo [size]="48" class="text-white" />
+            <app-logo variant="mark" [height]="48" alt="" />
           </div>
           <h2 class="text-display-sm font-bold text-white mb-4 font-sans">
             Conecta. Aprende. Crece.

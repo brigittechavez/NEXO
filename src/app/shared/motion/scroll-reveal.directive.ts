@@ -8,10 +8,16 @@ type Direction = 'up' | 'down' | 'left' | 'right';
  *
  * `slide` — the default: fades in while translating.
  * `clip`  — an editorial mask wipe; the element is uncovered rather than moved.
- * `scale` — settles in from slightly larger, for photography-led surfaces.
+ * `scale` — settles outward from slightly smaller.
  *
  * Having more than one keeps a long public page from animating every section
  * the same way (§73).
+ *
+ * Note on full-bleed elements: `slide` with a horizontal direction translates
+ * the element sideways, which on a section spanning the viewport shows up as
+ * horizontal overflow (or a strip of empty space) for as long as the element
+ * is waiting to be revealed. Use `clip` for a horizontal feel on sections, and
+ * keep `slide` horizontals for content that sits inside a container.
  */
 type Variant = 'slide' | 'clip' | 'scale';
 
@@ -76,7 +82,10 @@ export class ScrollRevealDirective implements AfterViewInit, OnDestroy {
           to['ease'] = 'power2.inOut';
           break;
         case 'scale':
-          from['scale'] = 1.06;
+          // Settles outward, never inward. Starting above 1 makes a full-width
+          // section wider than the viewport and pushes the document sideways
+          // until the tween finishes.
+          from['scale'] = 0.96;
           to['scale'] = 1;
           break;
         default:

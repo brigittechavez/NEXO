@@ -195,7 +195,7 @@ export class WorkspaceComponent {
 
   protected readonly mentorName = 'Carlos Mendoza';
   protected readonly mentorTitle = 'Senior Frontend Engineer en Globant';
-  protected readonly mentorPhoto = 'https://api.dicebear.com/7.x/avataaars/svg?seed=Carlos';
+  protected readonly mentorPhoto = '/assets/images/mentors/mentor-m1-carlos-mendoza.webp';
 
   protected readonly nextSteps = signal([
     { title: 'Completar modulo de servicios en Angular', detail: 'Practica dependency injection con un ejemplo real', done: true },

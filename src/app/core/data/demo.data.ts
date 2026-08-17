@@ -24,7 +24,7 @@ export const DEMO_MENTEE: User = {
   email: 'maria.garcia@email.com',
   name: 'María García',
   role: 'mentee',
-  avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Maria',
+  avatar: '/assets/images/mentees/mentee-01-maria-garcia.webp',
   createdAt: daysFromToday(-79),
 };
 
@@ -142,7 +142,7 @@ export const DEMO_MENTOR: User = {
   email: 'carlos.mendoza@email.com',
   name: 'Carlos Mendoza',
   role: 'mentor',
-  avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Carlos',
+  avatar: '/assets/images/mentors/mentor-m1-carlos-mendoza.webp',
   createdAt: daysFromToday(-582),
 };
 
@@ -150,7 +150,7 @@ export const DEMO_MENTOR_ACTIVE_MENTEES = [
   {
     menteeId: 'mentee-1',
     menteeName: 'María García',
-    menteeAvatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Maria',
+    menteeAvatar: '/assets/images/mentees/mentee-01-maria-garcia.webp',
     goal: 'Conseguir primer trabajo como frontend developer',
     sessionsCompleted: 3,
     nextSession: daysFromToday(2),
@@ -159,7 +159,7 @@ export const DEMO_MENTOR_ACTIVE_MENTEES = [
   {
     menteeId: 'mentee-2',
     menteeName: 'Andrea Vásquez',
-    menteeAvatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Andrea',
+    menteeAvatar: '/assets/images/mentees/mentee-02-andrea-vasquez.webp',
     goal: 'Aprender React para un proyecto freelance',
     sessionsCompleted: 5,
     nextSession: daysFromToday(1),
@@ -168,7 +168,7 @@ export const DEMO_MENTOR_ACTIVE_MENTEES = [
   {
     menteeId: 'mentee-3',
     menteeName: 'Luis Paredes',
-    menteeAvatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=LuisParedes',
+    menteeAvatar: '/assets/images/mentees/mentee-03-luis-paredes.webp',
     goal: 'Preparar entrevistas para FAANG',
     sessionsCompleted: 2,
     nextSession: daysFromToday(6),

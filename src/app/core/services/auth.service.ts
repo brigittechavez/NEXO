@@ -75,7 +75,10 @@ export class AuthService {
         email,
         name,
         role,
-        avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(name)}`,
+        // No portrait for a brand-new account: nx-avatar falls back to initials,
+        // which keeps the fallback inside the design system instead of depending
+        // on an external avatar service.
+        avatar: '',
         createdAt: new Date(),
       };
       this.setDemoSession(user);
@@ -221,8 +224,8 @@ export class AuthService {
       email: authUser.email ?? '',
       name: displayName,
       role,
-      avatar:
-        avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(displayName)}`,
+      // Empty when the profile has no picture; nx-avatar renders initials.
+      avatar,
       createdAt: new Date(authUser.created_at),
     };
   }
